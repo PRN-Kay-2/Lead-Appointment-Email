@@ -87,19 +87,29 @@
 </div>
 
 <script>
+function formatDate(dateStr) {
+    const dateObj = new Date(dateStr);
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleString("en-GB", { month: "short" });
+    const year = dateObj.getFullYear();
+    return `${day} ${month} ${year}`;
+}
+
 function generateEmail() {
 
-    const address = encodeURIComponent(document.getElementById("propertyAddress").value);
-    const tenant = encodeURIComponent(document.getElementById("tenantName").value);
+    const address = document.getElementById("propertyAddress").value;
+    const tenant = document.getElementById("tenantName").value;
     const email = document.getElementById("tenantEmail").value;
-    const date = encodeURIComponent(document.getElementById("date").value);
-    const agent = encodeURIComponent(document.getElementById("agentName").value);
+    const dateRaw = document.getElementById("date").value;
+    const agent = document.getElementById("agentName").value;
+
+    const formattedDate = formatDate(dateRaw);
 
     const subject = `${address} - Lead Sample Appointment`;
 
     const body = `Dear ${tenant},
 
-We are writing to inform you that we will be attending your property on ${date} to collect a water sample from your cold-water taps. This visit has been requested by your letting agents, ${agent}, following updates to the Repairing Standard. As part of these updates, properties built before 1970 are required to be checked for potential lead pipes or contaminants.
+We are writing to inform you that we will be attending your property on ${formattedDate} to collect a water sample from your cold-water taps. This visit has been requested by your letting agents, ${agent}, following updates to the Repairing Standard. As part of these updates, properties built before 1970 are required to be checked for potential lead pipes or contaminants.
 
 Further information about this process is available on our website.
 
