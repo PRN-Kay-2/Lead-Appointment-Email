@@ -60,6 +60,27 @@
     button:hover {
         background: #2f63d6;
     }
+
+    .small-section {
+        margin-top: 30px;
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .copy-box {
+        background: #2b2b2b;
+        padding: 12px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-family: monospace;
+        color: #fff;
+        text-align: center;
+    }
 </style>
 </head>
 
@@ -84,6 +105,15 @@
     <input type="text" id="agentName" placeholder="Enter letting agent name">
 
     <button onclick="generateEmail()">Generate Email</button>
+</div>
+
+<!-- NEW SECTION -->
+<div class="small-section">
+    <h2 style="text-align:center; color:#fff;">Quick Copy</h2>
+
+    <div id="copyText" class="copy-box">KH Emailed [--/--]</div>
+
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
 </div>
 
 <script>
@@ -123,6 +153,25 @@ Kind Regards,`;
 
     window.location.href = mailtoLink;
 }
+
+// --- NEW FUNCTION: Update and copy "KH Emailed [dd/mm]" ---
+
+function updateCopyText() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const formatted = `KH Emailed [${day}/${month}]`;
+    document.getElementById("copyText").innerText = formatted;
+}
+
+function copyToClipboard() {
+    updateCopyText(); // refresh date before copying
+    const text = document.getElementById("copyText").innerText;
+    navigator.clipboard.writeText(text);
+}
+    
+// Initialize the text on load
+updateCopyText();
 </script>
 
 </body>
