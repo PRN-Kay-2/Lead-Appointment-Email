@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lead Sample Appointment Email Generator</title>
+
+<style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 15px;
+        color: #cccccc;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        margin-top: 5px;
+        background: #2b2b2b;
+        color: #ffffff;
+    }
+
+    button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background: #3a7afe;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #2f63d6;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Email Generator</h1>
+
+<div class="container">
+    <label>Property Address</label>
+    <input type="text" id="propertyAddress" placeholder="Enter property address">
+
+    <label>Tenant Name</label>
+    <input type="text" id="tenantName" placeholder="Enter tenant name">
+
+    <label>Tenant Email Address</label>
+    <input type="email" id="tenantEmail" placeholder="Enter tenant email">
+
+    <label>Date</label>
+    <input type="date" id="date">
+
+    <label>Letting Agent Name</label>
+    <input type="text" id="agentName" placeholder="Enter letting agent name">
+
+    <button onclick="generateEmail()">Generate Email</button>
+</div>
+
+<script>
+function formatDate(dateStr) {
+    const dateObj = new Date(dateStr);
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleString("en-GB", { month: "short" });
+    const year = dateObj.getFullYear();
+    return `${day} ${month} ${year}`;
+}
+
+function generateEmail() {
+
+    const address = document.getElementById("propertyAddress").value;
+    const tenant = document.getElementById("tenantName").value;
+    const email = document.getElementById("tenantEmail").value;
+    const dateRaw = document.getElementById("date").value;
+    const agent = document.getElementById("agentName").value;
+
+    const formattedDate = formatDate(dateRaw);
+
+    const subject = `${address} - Lead Sample Appointment`;
+
+    const body = `Dear ${tenant},
+
+We are writing to inform you that we will be attending your property on ${formattedDate} to collect a water sample from your cold-water taps. This visit has been requested by your letting agents, ${agent}, following updates to the Repairing Standard. As part of these updates, properties built before 1970 are required to be checked for potential lead pipes or contaminants.
+
+Further information about this process is available on our website.
+
+We would greatly appreciate it if someone could be at home on the above date to provide access for our technician. If this is not possible, we can collect keys from your letting agent, provided you give permission to grant us access without anyone being present.
+
+If you are unavailable on the proposed date, please let us know as soon as possible so we can make alternative arrangements.
+
+Kind Regards,`;
+
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoLink;
+}
+</script>
+
+</body>
+</html>
